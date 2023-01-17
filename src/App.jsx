@@ -14,13 +14,13 @@ function App() {
 
 	useEffect(() => {
 		if (!ws) {
-			const webSocket = new WebSocket(`ws://192.168.1.223/ws`);
+			const webSocket = new WebSocket(`wss://192.168.1.223/ws`);
 			setWs(webSocket);
 		}
 
 		if (ws) {
 			ws.onclose = () => {
-				const webSocket = new WebSocket(`ws://192.168.1.223/ws`);
+				const webSocket = new WebSocket(`wss://192.168.1.223/ws`);
 				setTimeoutId(setTimeout(() => setWs(null), 5000));
 				setWs(webSocket);
 			};
