@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input-box:last-child {
+	@apply border-t border-gray-600;
+}
