@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Accordion from "./components/Accordion";
 
-import patterns from "./components/PatternParams";
+import { patternConfig } from "./components/PatternParams";
 
 function App() {
+	const patterns = new patternConfig(20).create();
+
 	const [values, setValues] = useState(
 		patterns.map((pattern) => pattern.body.map((input) => input.value))
 	);
@@ -77,27 +79,32 @@ function App() {
 
 	return (
 		<main className="min-h-screen p-4 bg-gray-900">
-			<section className="mb-4 p-4 max-[404px]:flex-col flex items-center justify-between text-sm font-medium bg-gray-800 text-gray-50 border border-gray-700 rounded">
-				<div className="max-[404px]:mb-4 max-[404px]:pb-6 max-[404px]:border-b border-gray-700 max-[404px]:w-full flex items-center max-[404px]:flex-col">
+			<section className="mb-4 p-4 max-[464px]:flex-col flex items-center justify-between text-sm font-medium bg-gray-800 text-gray-50 border border-gray-700 rounded">
+				<div className="max-[464px]:mb-4 max-[464px]:pb-6 max-[464px]:border-b border-gray-700 max-[464px]:w-full flex items-center max-[464px]:flex-col">
 					<label
 						htmlFor="ledNum"
-						className="max-[404px]:w-full max-[404px]:mb-4"
+						className="max-[464px]:w-full max-[464px]:mb-4"
 					>
 						Number of LEDs
 					</label>
-					<input
-						type="range"
-						name="ledNum"
-						id="ledNum"
-						min={1}
-						max={1000}
-						value={ledNum}
-						onChange={(e) => setLedNum(e.target.value)}
-						className="min-[404px]:ml-4 max-[404px]:w-full h-1 bg-gray-200 rounded-lg cursor-pointer range-sm"
-					/>
+					<div className="max-[464px]:w-full flex items-center gap-4">
+						<input
+							type="range"
+							name="ledNum"
+							id="ledNum"
+							min={1}
+							max={1000}
+							value={ledNum}
+							onChange={(e) => setLedNum(e.target.value)}
+							className="min-[464px]:ml-4 max-[464px]:w-full h-1 bg-gray-200 rounded-lg cursor-pointer range-sm"
+						/>
+						<p className="px-1 font-normal border border-gray-700 rounded">
+							{ledNum}
+						</p>
+					</div>
 				</div>
 				<button
-					className="max-[404px]:w-full px-4 py-2 bg-blue-500 text-gray-50 text-sm font-normal tracking-wide rounded"
+					className="max-[464px]:w-full px-4 py-2 bg-blue-500 text-gray-50 text-sm font-normal tracking-wide rounded"
 					onClick={handleButtonClick}
 				>
 					Send

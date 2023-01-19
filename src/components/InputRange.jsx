@@ -10,12 +10,17 @@ const InputRange = ({ label, min, max, value, onChange }) => {
 
 	return (
 		<div className="input-box">
-			<label
-				htmlFor={`range${label}`}
-				className="block py-2 text-sm font-medium"
-			>
-				{label}
-			</label>
+			<div className="flex items-center justify-between">
+				<label
+					htmlFor={`range${label}`}
+					className="block py-2 text-sm font-medium"
+				>
+					{label}
+				</label>
+				<p className="px-1 text-sm border border-gray-600 rounded">
+					{rangeValue}
+				</p>
+			</div>
 			<input
 				type="range"
 				name={`range${label}`}
