@@ -17,7 +17,7 @@ function App() {
 	useEffect(() => {
 		if (!ws) {
 			console.log("Connecting to WS");
-			const webSocket = new WebSocket(`ws://192.168.29.223:443/ws`);
+			const webSocket = new WebSocket(`ws://192.168.0.223:443/ws`);
 			setWs(webSocket);
 		}
 
@@ -25,24 +25,29 @@ function App() {
 			ws.onopen = () => console.log("WebSocket is open");
 
 			ws.onmessage = (e) => {
-				// console.log(e.data);
+				console.log(e.data);
 				const receivedJson = JSON.parse(e.data);
-				setLedNum(receivedJson.leds);
+				if (
+					Object.keys(receivedJson)[0] === "leds" &&
+					Object.keys(receivedJson)[1] === "patterns"
+				) {
+					setLedNum(receivedJson.leds);
 
-				const receivedValues = Object.values(receivedJson.patterns).map(
-					(value) => value.slice(1, 3)
-				);
-				setValues(receivedValues);
+					const receivedValues = Object.values(receivedJson.patterns).map(
+						(value) => value.slice(1, 3)
+					);
+					setValues(receivedValues);
 
-				const receivedSwitchValues = Object.values(receivedJson.patterns).map(
-					(value) => (value[0] === 0 ? false : true)
-				);
-				setSwitchValues(receivedSwitchValues);
+					const receivedSwitchValues = Object.values(receivedJson.patterns).map(
+						(value) => (value[0] === 0 ? false : true)
+					);
+					setSwitchValues(receivedSwitchValues);
+				}
 			};
 
 			ws.onclose = () => {
 				console.log("WebSocket is closed");
-				const webSocket = new WebSocket(`ws://192.168.29.223:443/ws`);
+				const webSocket = new WebSocket(`ws://192.168.0.223:443/ws`);
 				setTimeoutId(setTimeout(() => setWs(null), 5000));
 				setWs(webSocket);
 			};
