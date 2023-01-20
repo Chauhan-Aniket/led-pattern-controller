@@ -24,7 +24,21 @@ function App() {
 		if (ws) {
 			ws.onopen = () => console.log("WebSocket is open");
 
-			ws.onmessage = (e) => console.log(e.data);
+			ws.onmessage = (e) => {
+				// console.log(e.data);
+				const receivedJson = JSON.parse(e.data);
+				setLedNum(receivedJson.leds);
+
+				const receivedValues = Object.values(receivedJson.patterns).map(
+					(value) => value.slice(1, 3)
+				);
+				setValues(receivedValues);
+
+				const receivedSwitchValues = Object.values(receivedJson.patterns).map(
+					(value) => (value[0] === 0 ? false : true)
+				);
+				setSwitchValues(receivedSwitchValues);
+			};
 
 			ws.onclose = () => {
 				console.log("WebSocket is closed");
@@ -104,13 +118,7 @@ function App() {
 					</div>
 				</div>
 				<button
-					className="max-[464px]:hidden max-[464px]:w-full px-4 py-2 bg-blue-500 text-gray-50 text-sm font-normal tracking-wide rounded"
-					onClick={handleButtonClick}
-				>
-					Send
-				</button>
-				<button
-					className="min-[464px]:hidden fixed bottom-3 right-4 p-2 bg-blue-500 text-gray-50 text-sm font-normal tracking-wide rounded z-[1]"
+					className="relative max-[464px]:fixed max-[464px]:bottom-3 max-[464px]:right-4 p-2 bg-blue-500 text-gray-50 rounded z-[1]"
 					onClick={handleButtonClick}
 					title="Send"
 				>
@@ -120,7 +128,6 @@ function App() {
 						fill="#ffffff"
 						viewBox="0 0 24 24"
 						xmlns="http://www.w3.org/2000/svg"
-						// className="rotate-[-45deg] translate-x-[2px] translate-y-[-2px]"
 					>
 						<path d="M21.243 12.437a.5.5 0 0 0 0-.874l-2.282-1.268A75.497 75.497 0 0 0 4.813 4.231l-.665-.208A.5.5 0 0 0 3.5 4.5v5.75a.5.5 0 0 0 .474.5l1.01.053a44.41 44.41 0 0 1 7.314.998l.238.053c.053.011.076.033.089.05a.163.163 0 0 1 .029.096c0 .04-.013.074-.029.096-.013.017-.036.039-.089.05l-.238.053a44.509 44.509 0 0 1-7.315.999l-1.01.053a.5.5 0 0 0-.473.499v5.75a.5.5 0 0 0 .65.477l.664-.208a75.499 75.499 0 0 0 14.146-6.064l2.283-1.268Z"></path>
 					</svg>
