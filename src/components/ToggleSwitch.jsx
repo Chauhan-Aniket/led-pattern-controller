@@ -6,7 +6,7 @@ const ToggleSwitch = ({ checked, onChange }) => {
 	};
 
 	return (
-		<label className="relative mx-4 inline-flex items-center">
+		<label className="relative inline-flex items-center">
 			<input
 				type="checkbox"
 				className="sr-only peer"

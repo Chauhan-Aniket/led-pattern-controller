@@ -32,13 +32,30 @@ const Accordion = ({
 				>
 					<button
 						className="relative w-full flex justify-between items-center"
-						onClick={() => toggleAccordion(index)}
+						onClick={() => switchState[index] && toggleAccordion(index)}
 					>
 						<p className="p-4 font-medium text-sm">{pattern.heading}</p>
-						<ToggleSwitch
-							checked={switchState[index]}
-							onChange={(value) => handleSwitch(index, value)}
-						/>
+						<div className="flex items-center">
+							<ToggleSwitch
+								checked={switchState[index]}
+								onChange={(value) => handleSwitch(index, value)}
+							/>
+							<svg
+								width="35"
+								height="35"
+								fill="none"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="1.5"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
+								className={`fill-gray-50 ${
+									activeSections.includes(index) && "rotate-180"
+								} ${!switchState[index] && "rotate-0"}`}
+							>
+								<path d="M16.571 9.714 12 14.286 7.429 9.714"></path>
+							</svg>
+						</div>
 					</button>
 					{switchState[index] && activeSections.includes(index) && (
 						<div className="px-4 w-full border-t border-gray-600">
