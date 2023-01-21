@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Accordion from "./components/Accordion";
+import IconButton from "./components/IconButton";
 
 import { patternConfig } from "./components/PatternParams";
 
@@ -96,30 +97,96 @@ function App() {
 		}
 	};
 
+	const handleLedIncrement = () => {
+		if (ledNum < 1000) {
+			setLedNum(parseInt(ledNum) + 1);
+		}
+	};
+
+	const handleLedDecrement = () => {
+		if (ledNum > 10) {
+			setLedNum(parseInt(ledNum) - 1);
+		}
+	};
+
+	const incrementPatternValue = (index, inputIndex) => {
+		setValues(
+			values.map((patternValues, i) =>
+				i === index
+					? patternValues.map((inputValue, j) =>
+							j === inputIndex ? inputValue + 1 : inputValue
+					  )
+					: patternValues
+			)
+		);
+	};
+
+	const decrementPatternValue = (index, inputIndex) => {
+		setValues(
+			values.map((patternValues, i) =>
+				i === index
+					? patternValues.map((inputValue, j) =>
+							j === inputIndex ? inputValue - 1 : inputValue
+					  )
+					: patternValues
+			)
+		);
+	};
+
 	return (
 		<main className="min-h-screen p-4 bg-gray-900">
 			<section className="mb-4 p-4 max-[464px]:flex-col flex items-center justify-between text-sm font-medium bg-gray-800 text-gray-50 border border-gray-700 rounded">
-				<div className="max-[464px]:w-full flex items-center max-[464px]:flex-col">
-					<label
-						htmlFor="ledNum"
-						className="max-[464px]:w-full max-[464px]:mb-4"
-					>
-						Number of LEDs
-					</label>
-					<div className="max-[464px]:w-full flex items-center gap-4">
+				<div className=" max-[464px]:w-full flex items-center flex-col">
+					<div className="w-full mb-5 flex items-center justify-between">
+						<label htmlFor="ledNum" className="max-[464px]:w-full">
+							Number of LEDs
+						</label>
+						<p className="px-1 font-normal border border-gray-700 rounded">
+							{ledNum}
+						</p>
+					</div>
+					<div className="w-full flex items-center gap-4">
+						<IconButton onClick={handleLedDecrement}>
+							<svg
+								width="20"
+								height="20"
+								fill="none"
+								stroke="#ffffff"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="1.5"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path d="M6.286 12h11.428"></path>
+							</svg>
+						</IconButton>
 						<input
 							type="range"
 							name="ledNum"
 							id="ledNum"
-							min={1}
+							min={10}
 							max={1000}
 							value={ledNum}
 							onChange={(e) => setLedNum(e.target.value)}
-							className="min-[464px]:ml-4 max-[464px]:w-full h-1 bg-gray-200 rounded-lg cursor-pointer range-sm"
+							className="max-[464px]:w-full h-1 bg-gray-200 rounded-lg cursor-pointer range-sm"
 						/>
-						<p className="px-1 font-normal border border-gray-700 rounded">
-							{ledNum}
-						</p>
+						<IconButton onClick={handleLedIncrement}>
+							<svg
+								width="20"
+								height="20"
+								fill="none"
+								stroke="#ffffff"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="1.5"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path d="M6.286 12h11.428"></path>
+								<path d="M12 6.286v11.428"></path>
+							</svg>
+						</IconButton>
 					</div>
 				</div>
 				<button
@@ -145,6 +212,8 @@ function App() {
 					values={values}
 					switchState={switchValues}
 					handleSwitch={handleSwitch}
+					decrementPatternValue={decrementPatternValue}
+					incrementPatternValue={incrementPatternValue}
 				/>
 			</section>
 		</main>

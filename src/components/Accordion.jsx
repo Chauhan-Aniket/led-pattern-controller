@@ -8,6 +8,8 @@ const Accordion = ({
 	onChange,
 	switchState,
 	handleSwitch,
+	decrementPatternValue,
+	incrementPatternValue,
 }) => {
 	const [activeSections, setActiveSections] = useState([]);
 
@@ -48,6 +50,12 @@ const Accordion = ({
 									max={input.max}
 									value={values[index][inputIndex]}
 									onChange={(value) => onChange(index, inputIndex, value)}
+									decrementPatternValue={() =>
+										decrementPatternValue(index, inputIndex)
+									}
+									incrementPatternValue={() =>
+										incrementPatternValue(index, inputIndex)
+									}
 								/>
 							))}
 						</div>
