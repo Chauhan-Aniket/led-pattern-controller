@@ -15,14 +15,14 @@ function App() {
 	const [timeoutId, setTimeoutId] = useState(null);
 
 	useEffect(() => {
-		if (!ws) {
+		if (!ws || ws.readyState === WebSocket.CLOSED) {
 			console.log("Connecting to WS");
 			const webSocket = new WebSocket(`ws://192.168.0.223:443/ws`);
 			setWs(webSocket);
 		}
 
 		if (ws) {
-			ws.onopen = () => console.log("WebSocket is open");
+			ws.onopen = () => console.log("Connected to WebSocket");
 
 			ws.onmessage = (e) => {
 				console.log(e.data);
