@@ -18,13 +18,17 @@ const InputRange = ({
 	};
 
 	const handleDecrement = () => {
-		setRangeValue(parseInt(rangeValue) - 1);
-		decrementPatternValue(rangeValue);
+		if (rangeValue > min) {
+			setRangeValue(parseInt(rangeValue) - 1);
+			decrementPatternValue(rangeValue);
+		}
 	};
 
 	const handleIncrement = () => {
-		setRangeValue(parseInt(rangeValue) + 1);
-		incrementPatternValue(rangeValue);
+		if (rangeValue < max) {
+			setRangeValue(parseInt(rangeValue) + 1);
+			incrementPatternValue(rangeValue);
+		}
 	};
 
 	return (
