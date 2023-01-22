@@ -7,7 +7,7 @@ export class patternConfig {
 		const patterns = [];
 		for (let i = 1; i <= this.count; i++) {
 			patterns.push({
-				heading: `Pattern ${i}`,
+				heading: `Effect ${i}`,
 				body: [
 					{
 						label: "Brightness",
@@ -16,7 +16,7 @@ export class patternConfig {
 						value: 50,
 					},
 					{
-						label: "Delay",
+						label: "Speed",
 						min: 1,
 						max: 100,
 						value: 50,
