@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import IconButton from "./IconButton";
 
 const InputRange = ({
@@ -9,6 +9,7 @@ const InputRange = ({
 	onChange,
 	decrementPatternValue,
 	incrementPatternValue,
+	reset,
 }) => {
 	const [rangeValue, setRangeValue] = useState(value);
 
@@ -30,6 +31,10 @@ const InputRange = ({
 			incrementPatternValue(rangeValue);
 		}
 	};
+
+	useEffect(() => {
+		setRangeValue(value);
+	}, [value, reset]);
 
 	return (
 		<div className="input-box">

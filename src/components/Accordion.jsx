@@ -10,6 +10,7 @@ const Accordion = ({
 	handleSwitch,
 	decrementPatternValue,
 	incrementPatternValue,
+	reset,
 }) => {
 	const [activeSections, setActiveSections] = useState([]);
 
@@ -73,6 +74,7 @@ const Accordion = ({
 									incrementPatternValue={() =>
 										incrementPatternValue(index, inputIndex)
 									}
+									reset={reset}
 								/>
 							))}
 						</div>
