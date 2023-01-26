@@ -15,11 +15,14 @@ function App() {
 	const [ws, setWs] = useState(null);
 	const [timeoutId, setTimeoutId] = useState(null);
 	const [reset, setReset] = useState(false);
+	const [patternsObj, setPatternsObj] = useState({});
+	const [playingIndex, setPlayingIndex] = useState(-1);
 
 	useEffect(() => {
+		const webSocket = new WebSocket(`ws://192.168.0.223:80/ws`);
+
 		if (!ws || ws.readyState === WebSocket.CLOSED) {
 			console.log("Connecting to WS");
-			const webSocket = new WebSocket(`ws://192.168.0.223:80/ws`);
 			setWs(webSocket);
 		}
 
@@ -29,9 +32,11 @@ function App() {
 			ws.onmessage = (e) => {
 				console.log(e.data);
 				const receivedJson = JSON.parse(e.data);
+				// console.log(receivedJson);
 				if (
-					Object.keys(receivedJson)[0] === "leds" &&
-					Object.keys(receivedJson)[1] === "patterns"
+					Object.keys(receivedJson)[0] === "trial" &&
+					Object.keys(receivedJson)[1] === "leds" &&
+					Object.keys(receivedJson)[2] === "patterns"
 				) {
 					setLedNum(receivedJson.leds);
 
@@ -49,7 +54,6 @@ function App() {
 
 			ws.onclose = () => {
 				console.log("WebSocket is closed");
-				const webSocket = new WebSocket(`ws://192.168.0.223:80/ws`);
 				setTimeoutId(setTimeout(() => setWs(null), 5000));
 				setWs(webSocket);
 			};
@@ -81,7 +85,6 @@ function App() {
 		);
 	};
 
-	const patternsObj = {};
 	patterns.map(
 		(val, i) =>
 			(patternsObj[`p${i + 1}`] = [switchValues[i] ? 1 : 0, values[i]].flat())
@@ -91,6 +94,31 @@ function App() {
 		if (ws) {
 			ws.send(
 				JSON.stringify({
+					trial: 0,
+					leds: parseInt(ledNum),
+					patterns: patternsObj,
+				})
+			);
+		}
+	};
+
+	const handlePlayClick = (index) => {
+		const newPatterns = { ...patternsObj };
+		Object.keys(newPatterns).forEach((key, i) => {
+			newPatterns[key][0] = i === index ? 1 : 0;
+		});
+		setPatternsObj(newPatterns);
+		// console.log(newPatterns);
+
+		if (ws) {
+			ws.onmessage = (e) => {
+				const receivedJson = JSON.parse(e.data);
+				// console.log(receivedJson);
+				receivedJson.trial === 0 ? setPlayingIndex(-1) : setPlayingIndex(index);
+			};
+			ws.send(
+				JSON.stringify({
+					trial: 1,
 					leds: parseInt(ledNum),
 					patterns: patternsObj,
 				})
@@ -249,6 +277,9 @@ function App() {
 					decrementPatternValue={decrementPatternValue}
 					incrementPatternValue={incrementPatternValue}
 					reset={reset}
+					handlePlayClick={handlePlayClick}
+					playingIndex={playingIndex}
+					handleButtonClick={handleButtonClick}
 				/>
 			</section>
 		</main>
