@@ -17,17 +17,31 @@ function App() {
 	const [reset, setReset] = useState(false);
 	const [patternsObj, setPatternsObj] = useState({});
 	const [playingIndex, setPlayingIndex] = useState(-1);
+	const [connectionState, setConnectionState] = useState("");
+	const [connectionClass, setConnectionClass] = useState(
+		"text-gray-50 border border-transparent"
+	);
 
 	useEffect(() => {
-		const webSocket = new WebSocket(`ws://192.168.0.223:80/ws`);
+		const webSocket = new WebSocket(`ws://192.168.4.1:80/ws`);
 
 		if (!ws || ws.readyState === WebSocket.CLOSED) {
 			console.log("Connecting to WS");
+			setConnectionState("Connecting to Device");
+			setConnectionClass(
+				"bg-[rgba(255,255,50,0.2)] border-[rgba(255,255,50,0.7)] text-[rgba(255,255,50,1)]"
+			);
 			setWs(webSocket);
 		}
 
 		if (ws) {
-			ws.onopen = () => console.log("Connected to WebSocket");
+			ws.onopen = () => {
+				console.log("Connected to WebSocket");
+				setConnectionState("Connected");
+				setConnectionClass(
+					"bg-[rgba(50,255,50,0.2)] border-[rgba(50,255,50,0.7)] text-[rgba(50,255,50,1)]"
+				);
+			};
 
 			ws.onmessage = (e) => {
 				console.log(e.data);
@@ -54,12 +68,21 @@ function App() {
 
 			ws.onclose = () => {
 				console.log("WebSocket is closed");
+				WebSocket.CLOSED && setConnectionState("Failed to connect Device");
+				WebSocket.CLOSED &&
+					setConnectionClass(
+						"bg-[rgba(255,50,50,0.2)] border-[rgba(255,50,50,0.7)] text-[rgba(255,50,50,1)]"
+					);
 				setTimeoutId(setTimeout(() => setWs(null), 5000));
 				setWs(webSocket);
 			};
 
-			ws.onerror = () =>
-				console.log("There is an Error to connect with WebSocket");
+			ws.onerror = () => {
+				setConnectionState("Failed to connect Device");
+				setConnectionClass(
+					"bg-[rgba(255,50,50,0.2)] border-[rgba(255,50,50,0.7)] text-[rgba(255,50,50,1)]"
+				);
+			};
 		}
 
 		return () => {
@@ -173,6 +196,12 @@ function App() {
 
 	return (
 		<main className="min-h-screen p-4 bg-gray-900">
+			<p
+				className={`mb-4 p-2 border ${connectionClass} text-[0.7rem] tracking-widest text-center uppercase rounded`}
+			>
+				<span className="font-medium pr-2">Status:</span>
+				<span>{connectionState}</span>
+			</p>
 			<section className="mb-4 p-4 max-[464px]:flex-col flex items-center justify-between text-sm font-medium bg-gray-800 text-gray-50 border border-gray-700 rounded">
 				<div className=" max-[464px]:w-full flex items-center flex-col">
 					<div className="w-full mb-5 flex items-center justify-between">
