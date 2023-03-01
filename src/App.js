@@ -280,7 +280,7 @@ function App() {
 			</section>
 			<section className="p-4 w-full flex items-center gap-2 font-medium">
 				<button
-					className="px-4 py-2 flex items-center justify-center bg-red-500 text-gray-50 uppercase tracking-wider rounded"
+					className="px-4 py-2 flex items-center justify-center bg-rose-500 text-gray-50 uppercase tracking-wide rounded"
 					onClick={handleReset}
 					title="Reset"
 				>
@@ -293,7 +293,7 @@ function App() {
 						strokeLinecap="round"
 						strokeLinejoin="round"
 						strokeWidth="2"
-						viewBox="-4 -4 30 28"
+						viewBox="-4 -4 30 30"
 						xmlns="http://www.w3.org/2000/svg"
 					>
 						<path d="M4.09 7.413A9.143 9.143 0 1 1 2.857 12"></path>
