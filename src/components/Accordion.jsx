@@ -79,7 +79,9 @@ const Accordion = ({
 							className="relative w-full flex justify-between items-center"
 							onClick={() => switchState[index] && toggleAccordion(index)}
 						>
-							<p className="p-3 font-medium text-sm">{pattern.heading}</p>
+							<p className="p-3 font-medium text-sm uppercase tracking-wide">
+								{pattern.heading}
+							</p>
 							<div className="flex items-center">
 								<ToggleSwitch
 									checked={playingIndex && switchState[index]}

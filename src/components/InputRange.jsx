@@ -38,10 +38,10 @@ const InputRange = ({
 
 	return (
 		<div className="input-box">
-			<div className="mb-2 flex items-center justify-between">
+			<div className="my-1 flex items-center justify-between">
 				<label
 					htmlFor={`range${label}`}
-					className="block py-2 text-sm font-medium"
+					className="block py-2 text-sm font-medium uppercase tracking-wide"
 				>
 					{label}
 				</label>
