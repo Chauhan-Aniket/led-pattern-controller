@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Accordion from "./components/Accordion";
 import IconButton from "./components/IconButton";
-import MarqueeText from "./components/MarqueeText";
 
 import { patternConfig } from "./components/PatternParams";
 
 function App() {
-	const patterns = new patternConfig(20).create();
+	const patterns = new patternConfig(40).create();
 
 	const [values, setValues] = useState(
 		patterns.map((pattern) => pattern.body.map((input) => input.value))
@@ -198,7 +197,7 @@ function App() {
 	return (
 		<div className="h-screen flex flex-col bg-gray-900">
 			<nav className="py-2 w-full grid place-items-center bg-blue-500 text-gray-50 text-center font-medium tracking-wider z-[9]">
-				<MarqueeText text="TezTech WiFi Controller" speed={25} />
+				<marquee scrollamount="3">TezTech WiFi Controller</marquee>
 			</nav>
 			<section className="m-4">
 				<p
@@ -207,21 +206,24 @@ function App() {
 					<span className="font-medium pr-2">Status:</span>
 					<span>{connectionState}</span>
 				</p>
-				<div className="p-4 max-[464px]:flex-col flex items-center justify-between text-sm font-medium bg-gray-800 text-gray-50 border border-gray-700 rounded">
-					<div className=" max-[464px]:w-full flex items-center flex-col">
-						<div className="w-full mb-5 flex items-center justify-between">
-							<label htmlFor="ledNum" className="max-[464px]:w-full">
+				<div className="p-4 max-[620px]:flex-col flex items-center justify-between text-sm font-medium bg-gray-800 text-gray-50 border border-gray-700 rounded">
+					<div className="w-full flex items-center justify-between max-[620px]:flex-col">
+						<div className="w-full max-[620px]:mb-5 flex items-center max-[620px]:justify-between">
+							<label
+								htmlFor="ledNum"
+								className="max-[620px]:w-full min-[620px]:mr-10"
+							>
 								Number of LEDs
 							</label>
 							<p className="px-1 font-normal border border-gray-700 rounded">
 								{ledNum}
 							</p>
 						</div>
-						<div className="w-full flex items-center gap-4">
+						<div className="w-full flex items-center justify-end gap-4">
 							<IconButton onClick={handleLedDecrement}>
 								<svg
-									width="20"
-									height="20"
+									width="23"
+									height="23"
 									fill="none"
 									stroke="#ffffff"
 									strokeLinecap="round"
@@ -241,12 +243,12 @@ function App() {
 								max={1000}
 								value={ledNum}
 								onChange={(e) => setLedNum(e.target.value)}
-								className="max-[464px]:w-full h-1 bg-gray-200 rounded-lg cursor-pointer range-sm"
+								className="max-[620px]:w-full h-1 bg-gray-200 rounded-lg cursor-pointer range-sm"
 							/>
 							<IconButton onClick={handleLedIncrement}>
 								<svg
-									width="20"
-									height="20"
+									width="23"
+									height="23"
 									fill="none"
 									stroke="#ffffff"
 									strokeLinecap="round"
@@ -263,7 +265,7 @@ function App() {
 					</div>
 				</div>
 			</section>
-			<section className="px-4 grid min-[374px]:grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 2xl:grid-cols-12 grid-flow-row gap-5 bg-gray-900 grow overflow-y-scroll">
+			<section className="px-4 grid min-[520px]:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-6 grid-flow-row gap-5 bg-gray-900 grow overflow-y-scroll">
 				<Accordion
 					patterns={patterns}
 					onChange={handleChange}
@@ -278,9 +280,9 @@ function App() {
 					handleButtonClick={handleButtonClick}
 				/>
 			</section>
-			<section className="p-4 w-full flex items-center gap-2 font-medium">
+			<section className="p-4 w-full flex items-center gap-4 font-medium">
 				<button
-					className="px-4 py-2 flex items-center justify-center bg-rose-500 text-gray-50 uppercase tracking-wide rounded"
+					className="w-full px-4 py-2 flex items-center justify-center bg-rose-500 text-gray-50 uppercase tracking-wide rounded"
 					onClick={handleReset}
 					title="Reset"
 				>
