@@ -52,8 +52,8 @@ const InputRange = ({
 			<div className="mb-4 flex items-center gap-4">
 				<IconButton onClick={handleDecrement}>
 					<svg
-						width="20"
-						height="20"
+						width="23"
+						height="23"
 						fill="none"
 						stroke="#ffffff"
 						strokeLinecap="round"
@@ -77,8 +77,8 @@ const InputRange = ({
 				/>
 				<IconButton onClick={handleIncrement}>
 					<svg
-						width="20"
-						height="20"
+						width="23"
+						height="23"
 						fill="none"
 						stroke="#ffffff"
 						strokeLinecap="round"
